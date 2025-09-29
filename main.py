@@ -1,16 +1,26 @@
 from fastapi import FastAPI
-import os
-
+import uvicorn
 from api import init_routers
+from starlette.middleware.cors import CORSMiddleware
 
-app = FastAPI(root_path="/api")
-init_routers(app)
+def init_middlewares(app: FastAPI) -> None:
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"]
+    )
 
-# Создаем необходимые директории
-os.makedirs("uploads", exist_ok=True)
-os.makedirs("results", exist_ok=True)
-os.makedirs("temp", exist_ok=True)
+def create_app() -> FastAPI:
+    app = FastAPI(root_path="/api")
+    init_routers(app)
+    init_middlewares(app)
+    return app
 
+
+if __name__ == "__main__":
+    uvicorn.run("main:create_app", host="0.0.0.0", port=1234, reload=True)
 
 
 
