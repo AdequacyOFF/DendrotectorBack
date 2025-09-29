@@ -7,10 +7,12 @@ authors = [
 ]
 
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = "^3.13"
 dependencies = [
     "fastapi (>=0.118.0,<0.119.0)",
     "uvicorn (>=0.37.0,<0.38.0)",
+    "orjson (>=3.10.18)",
+    "loguru (>=0.7.3)",
 ]
 
 [tool.poetry]
